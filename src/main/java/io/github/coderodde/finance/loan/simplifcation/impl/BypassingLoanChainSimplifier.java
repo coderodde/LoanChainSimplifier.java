@@ -16,10 +16,6 @@ import java.util.List;
  * the minimum weight {@code w} of the {@code a_1} and {@code a_2}, subtract
  * {@code w} from both the arcs, and rearrange the arcs such that the total flow
  * is lowered.
- * 
- * @author Rodion "rodde" Efremov
- * @version 1.6 (Sep 2, 2021)
- * @since 1.6 (Sep 2, 2021)
  */
 public final class BypassingLoanChainSimplifier implements LoanChainSimplifier {
 

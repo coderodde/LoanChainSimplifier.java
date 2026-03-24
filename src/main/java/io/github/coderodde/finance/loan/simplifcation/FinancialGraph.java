@@ -9,10 +9,7 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 
 /**
- * This class models a loan graph.
- *
- * @author coderodde
- * @version 1.6
+ * This class models a financial loan graph.
  */
 public class FinancialGraph implements Iterable<FinancialGraphNode> {
 

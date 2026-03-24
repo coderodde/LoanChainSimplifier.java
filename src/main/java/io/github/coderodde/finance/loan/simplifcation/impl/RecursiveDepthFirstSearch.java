@@ -13,10 +13,6 @@ import io.github.coderodde.finance.loan.simplifcation.FinancialGraph;
 /**
  * This class implements a recursive depth-first search variant returning a 
  * directed cycle.
- * 
- * @author Rodion "rodde" Efremov
- * @version 1.6 (Sep 4, 2021)
- * @since 1.6 (Sep 4, 2021)
  */
 class RecursiveDepthFirstSearch {
 

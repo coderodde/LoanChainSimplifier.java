@@ -11,7 +11,10 @@ import java.util.Objects;
 
 /**
  * This simplifier runs in linear time. First, it ignores the nodes that have
- * zero equity.
+ * zero equity. Then it gathers all nodes with positive equity and all the nodes
+ * with negative equity. After that, it marches through the both of them 
+ * matching the positive equity nodes with negative equity nodes. Effectively,
+ * this algorithm cannot return more than {@code N - 1} arcs.
  */
 public final class LinearSimplifier implements LoanChainSimplifier {
 

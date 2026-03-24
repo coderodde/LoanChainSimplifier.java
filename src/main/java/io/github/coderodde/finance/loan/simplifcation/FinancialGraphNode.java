@@ -7,10 +7,6 @@ import java.util.NoSuchElementException;
 
 /**
  * This class implements a loan graph node.
- *
- * @author Rodion "coderodde" Efremov
- * @version 1.61 (Sep 2, 2021)
- * @since 1.6
  */
 public class FinancialGraphNode implements Iterable<FinancialGraphNode> {
 
