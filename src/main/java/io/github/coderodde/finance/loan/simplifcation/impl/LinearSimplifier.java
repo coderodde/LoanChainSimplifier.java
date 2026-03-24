@@ -10,7 +10,8 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * 
+ * This simplifier runs in linear time. First, it ignores the nodes that have
+ * zero equity.
  */
 public final class LinearSimplifier implements LoanChainSimplifier {
 
@@ -68,16 +69,16 @@ public final class LinearSimplifier implements LoanChainSimplifier {
         }
         
         for (FinancialGraphNode node : negativeEquityNodes) {
-            newPositiveEquityNodes.add(
+            newNegativeEquityNodes.add(
                     new FinancialGraphNode(negativeEquityNodes.get(ni)));
         
-            negativeNodeEquities[ni++] = node.getEquity();
+            negativeNodeEquities[ni++] = -node.getEquity();
         }
         
         pi = 0;
         ni = 0;
         
-        while (pi < POS_LIMIT) {
+        while (pi < POS_LIMIT && ni < NEG_LIMIT) {
             if (positiveNodeEquities[pi] > negativeNodeEquities[ni]) {
                 
                 FinancialGraphNode lender1 = newPositiveEquityNodes.get(pi);
@@ -108,7 +109,7 @@ public final class LinearSimplifier implements LoanChainSimplifier {
                 lender2.connectToBorrower(debtor2);
                 lender2.setWeightTo(debtor2, positiveNodeEquities[pi]);
                 
-                negativeNodeEquities[pi] -= positiveNodeEquities[ni];
+                negativeNodeEquities[ni] -= positiveNodeEquities[pi];
                 ++pi;
             } else {
                 
@@ -118,8 +119,8 @@ public final class LinearSimplifier implements LoanChainSimplifier {
                 FinancialGraphNode lender2 = m.get(lender1.getName());
                 FinancialGraphNode debtor2 = m.get(debtor1.getName());
                 
-                g.add(lender2);
-                g.add(debtor2);
+                r.add(lender2);
+                r.add(debtor2);
                 
                 lender2.connectToBorrower(debtor2);
                 lender2.setWeightTo(debtor2, positiveNodeEquities[pi]);
@@ -131,10 +132,10 @@ public final class LinearSimplifier implements LoanChainSimplifier {
         
         for (FinancialGraphNode node : 
                 loadZeroEquityNodeNames(zeroEquityNodes)) { 
-            g.add(node);
+            r.add(node);
         }
         
-        return null;
+        return r;
     }
 
     private Map<String, FinancialGraphNode> getIdToNodeMap(FinancialGraph g) {
@@ -160,3 +161,4 @@ public final class LinearSimplifier implements LoanChainSimplifier {
         return copy;
     }
 }
+    

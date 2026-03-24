@@ -3,6 +3,7 @@ package io.github.coderodde.finance.loan.simplifcation.benchmark;
 import io.github.coderodde.finance.loan.simplifcation.FinancialGraph;
 import io.github.coderodde.finance.loan.simplifcation.FinancialGraphNode;
 import io.github.coderodde.finance.loan.simplifcation.impl.BypassingLoanChainSimplifier;
+import io.github.coderodde.finance.loan.simplifcation.impl.LinearSimplifier;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -36,9 +37,20 @@ public class Benchmark {
         printStatistics(result1, "Bypassing");
         System.out.println("    Duration = " + (tb - ta) + " milliseconds.");
         
-        FinancialGraph result2 = 
-                null;
         
+        ta = System.currentTimeMillis();
+        
+        FinancialGraph result2 = new LinearSimplifier().simplify(source);
+        
+        tb = System.currentTimeMillis();
+        
+        printStatistics(result2, "Linear");
+        System.out.println("    Duration = " + (tb - ta) + " milliseconds.");
+        
+        boolean success = source.isEquivalentTo(result1) &&
+                          result1.isEquivalentTo(result2);
+        
+        System.out.println("Algorithms agree: " + success);
     }
     
     private static void printStatistics(FinancialGraph graph, String name) {
